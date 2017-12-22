@@ -11,12 +11,23 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import net.acesinc.data.json.generator.config.SimulationConfig;
-import net.acesinc.data.json.generator.config.JSONConfigReader;
-import net.acesinc.data.json.generator.log.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
+
+import net.acesinc.data.json.generator.config.JSONConfigReader;
+import net.acesinc.data.json.generator.config.SimulationConfig;
+import net.acesinc.data.json.generator.log.AzureIoTHubLogger;
+import net.acesinc.data.json.generator.log.EventLogger;
+import net.acesinc.data.json.generator.log.FileLogger;
+import net.acesinc.data.json.generator.log.HttpPostLogger;
+import net.acesinc.data.json.generator.log.KafkaJsonLogger;
+import net.acesinc.data.json.generator.log.KafkaLogger;
+import net.acesinc.data.json.generator.log.Log4JLogger;
+import net.acesinc.data.json.generator.log.MqttLogger;
+import net.acesinc.data.json.generator.log.NatsLogger;
+import net.acesinc.data.json.generator.log.TranquilityLogger;
 
 /**
  *
@@ -51,6 +62,11 @@ public class JsonDataGenerator {
                     case "kafka": {
                         log.info("Adding Kafka Producer with properties: " + elProps);
                         loggers.add(new KafkaLogger(elProps));
+                        break;
+                    }
+                    case "kafka-json": {
+                        log.info("Adding Kafka Producer with properties: " + elProps);
+                        loggers.add(new KafkaJsonLogger(elProps));
                         break;
                     }
                     case "tranquility": {
